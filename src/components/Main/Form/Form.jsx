@@ -1,0 +1,73 @@
+import React,{ useContext,useState } from 'react';
+import { TextField,Paper,Button,Typography,InputLabel,Select,MenuItem } from '@material-ui/core';
+import { ExpenseTrackerContext } from '../../../context/context';
+import { incomeCategories,expenseCategories } from '../../../constant/categories';
+import './Form.css';
+
+function Form () {
+
+    const { addTransaction } = useContext( ExpenseTrackerContext );
+    const types = [ 'Income','Expense' ]
+
+    const [ expense,setExpense ] = useState( {
+        type: 'Income',amount: 0,category: 'others',date: new Date()
+    } );
+
+    const categories = expense.type === 'Income' ? incomeCategories : expenseCategories;
+
+    const handleSubmit = async ( event ) => {
+        event.preventDefault();
+        addTransaction( { ...expense,id: Math.random() } );
+        handleClear();
+    }
+
+
+    const handleClear = () => {
+        setExpense( { type: '',amount: null,category: '',date: '' } )
+    }
+
+    return (
+        <div>
+            <Paper style={ { position: 'relative' } }>
+                <form onSubmit={ handleSubmit } className="form-container">
+                    <InputLabel >Type</InputLabel>
+                    <Select
+                        value={ expense.type }
+                        onChange={ ( event ) => setExpense( { ...expense,type: event.target.value } ) }>
+                        { types.map( ( type ) => (
+                            <MenuItem key={ type } value={ type } >
+                                {type }
+                            </MenuItem>
+                        ) ) }
+                    </Select>
+
+                    <TextField label="Amount " name="amount" value={ expense.amount } fullWidth={ true }
+                        onChange={ e => setExpense( { ...expense,amount: e.target.value } ) } />
+                    <br />
+                    <InputLabel >Category</InputLabel>
+                    <Select
+                        value={ expense.category }
+                        onChange={ ( event ) => setExpense( { ...expense,category: event.target.value } ) }>
+                        { categories.map( ( category ) => (
+                            <MenuItem key={ category } value={ category.type } >
+                                {category.type }
+                            </MenuItem>
+                        ) ) }
+                    </Select>
+                    <br />
+                    <Typography> Date</Typography>
+                    <TextField type="date" name="date" value={ expense.date } fullWidth={ true }
+                        onChange={ e => setExpense( { ...expense,date: e.target.value.split( ',' ) } ) } />
+                    <div style={ { 'marginTop': '15px',width: '100 %' } } >
+                    </div>
+                    <div className="form-button">
+                        <Button variant="contained" color="primary" type="submit">Submit</Button>
+                        <Button variant="contained" color="secondary" onClick={ handleClear }>Clear</Button>
+                    </div>
+                </form>
+            </Paper>
+        </div >
+    )
+}
+
+export default Form
