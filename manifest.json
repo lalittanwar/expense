@@ -4,8 +4,8 @@
   "icons": [
     {
       "src": "./images/expense.png",
-      "sizes": "512x512",
-      "type": "image/jpg"
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
