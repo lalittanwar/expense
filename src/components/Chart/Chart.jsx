@@ -6,14 +6,13 @@ import useStyles from './styles';
 
 function Chart ( { title } ) {
     const { total,chartData } = useTransaction( title );
-
     const classes = useStyles();
-    console.log( { total,chartData } );
+
     return (
         <Card className={ title === 'Income' ? classes.income : classes.expense }>
             <CardHeader title={ title } />
             <CardContent>
-                <Typography variant="h5">${ total }</Typography>
+                <Typography variant="h5"> <span>&#8377;</span>{ total }</Typography>
                 <Doughnut data={ chartData } />
             </CardContent>
         </Card>

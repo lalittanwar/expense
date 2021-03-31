@@ -2,6 +2,8 @@ import React,{ useContext,useState } from 'react';
 import { TextField,Paper,Button,Typography,InputLabel,Select,MenuItem } from '@material-ui/core';
 import { ExpenseTrackerContext } from '../../../context/context';
 import { incomeCategories,expenseCategories } from '../../../constant/categories';
+import dateFormat from '../../../utils/dateFormat';
+import CustomSnackbar from '../../Snackbar/Snackbar';
 import './Form.css';
 
 function Form () {
@@ -10,24 +12,27 @@ function Form () {
     const types = [ 'Income','Expense' ]
 
     const [ expense,setExpense ] = useState( {
-        type: 'Income',amount: 0,category: 'others',date: new Date()
+        type: 'Expense',amount: '',category: 'Shopping',date: dateFormat( new Date() )
     } );
 
+    const [ open,setOpen ] = useState( false );
     const categories = expense.type === 'Income' ? incomeCategories : expenseCategories;
 
     const handleSubmit = async ( event ) => {
         event.preventDefault();
         addTransaction( { ...expense,id: Math.random() } );
+        setOpen( true );
         handleClear();
     }
 
 
     const handleClear = () => {
-        setExpense( { type: '',amount: null,category: '',date: '' } )
+        setExpense( { type: 'Expense',amount: '',category: 'Shopping',date: dateFormat( new Date() ) } )
     }
 
     return (
         <div>
+            <CustomSnackbar open={ open } setOpen={ setOpen } />
             <Paper style={ { position: 'relative' } }>
                 <form onSubmit={ handleSubmit } className="form-container">
                     <InputLabel >Type</InputLabel>
@@ -40,9 +45,6 @@ function Form () {
                             </MenuItem>
                         ) ) }
                     </Select>
-
-                    <TextField label="Amount " name="amount" value={ expense.amount } fullWidth={ true }
-                        onChange={ e => setExpense( { ...expense,amount: e.target.value } ) } />
                     <br />
                     <InputLabel >Category</InputLabel>
                     <Select
@@ -54,15 +56,18 @@ function Form () {
                             </MenuItem>
                         ) ) }
                     </Select>
+
+                    <TextField label="Amount " name="amount" value={ expense.amount } fullWidth={ true }
+                        onChange={ e => setExpense( { ...expense,amount: e.target.value } ) } />
+
                     <br />
                     <Typography> Date</Typography>
                     <TextField type="date" name="date" value={ expense.date } fullWidth={ true }
                         onChange={ e => setExpense( { ...expense,date: e.target.value.split( ',' ) } ) } />
                     <div style={ { 'marginTop': '15px',width: '100 %' } } >
                     </div>
-                    <div className="form-button">
+                    <div style={ { textAlign: 'center' } }>
                         <Button variant="contained" color="primary" type="submit">Submit</Button>
-                        <Button variant="contained" color="secondary" onClick={ handleClear }>Clear</Button>
                     </div>
                 </form>
             </Paper>
