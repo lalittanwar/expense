@@ -5,7 +5,7 @@ export const reducer = ( state,action ) => {
             localStorage.setItem( 'transaction',JSON.stringify( transaction ) );
             return transaction;
         case 'ADD_TRANSACTION':
-            let newTransaction = [ ...state,action.payload ];
+            let newTransaction = [ action.payload,...state ];
             localStorage.setItem( 'transaction',JSON.stringify( newTransaction ) );
             return newTransaction;
         default:

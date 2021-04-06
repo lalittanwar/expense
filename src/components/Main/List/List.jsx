@@ -27,8 +27,11 @@ function List () {
                                     <MoneyOff />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={ `${ transaction.category } (${ transaction.notes })` } secondary={ `${ transaction.amount } - ${ transaction.date }` } />
-                            <ListItemSecondaryAction>
+                            { transaction.notes ?
+                                ( <ListItemText primary={ `${ transaction.category } (${ transaction.notes })` } secondary={ `${ transaction.amount } - ${ transaction.date }` } /> )
+                                : ( <ListItemText primary={ transaction.category } secondary={ `${ transaction.amount } - ${ transaction.date }` } /> )
+                            }
+                            < ListItemSecondaryAction >
                                 <IconButton edge="end" aria-label="delete" onClick={ () => deleteItem( transaction.id ) }>
                                     <Delete />
                                 </IconButton>
