@@ -12,7 +12,7 @@ function Form () {
     const types = [ 'Income','Expense' ]
 
     const [ expense,setExpense ] = useState( {
-        type: 'Expense',amount: '',category: 'Shopping',date: dateFormat( new Date() )
+        type: 'Expense',amount: '',category: 'Other',date: dateFormat( new Date() ),notes: ''
     } );
 
     const [ open,setOpen ] = useState( false );
@@ -27,7 +27,7 @@ function Form () {
 
 
     const handleClear = () => {
-        setExpense( { type: 'Expense',amount: '',category: 'Shopping',date: dateFormat( new Date() ) } )
+        setExpense( { type: 'Expense',amount: '',category: 'Other',date: dateFormat( new Date() ),notes: '' } )
     }
 
     return (
@@ -60,6 +60,8 @@ function Form () {
                     <TextField label="Amount " name="amount" value={ expense.amount } fullWidth={ true }
                         onChange={ e => setExpense( { ...expense,amount: e.target.value } ) } />
 
+                    <TextField label="Notes " name="notes" value={ expense.notes } fullWidth={ true }
+                        onChange={ e => setExpense( { ...expense,notes: e.target.value } ) } />
                     <br />
                     <Typography> Date</Typography>
                     <TextField type="date" name="date" value={ expense.date } fullWidth={ true }

@@ -19,7 +19,7 @@ function CustomSnackbar ( { open,setOpen,isDelete } ) {
                 <Snackbar
                     anchorOrigin={ { vertical: 'top',horizontal: 'right' } }
                     open={ open } autoHideDuration={ 6000 } onClose={ handleClose }>
-                    <MuiAlert onClose={ handleClose } severity="error" elevation={ 6 } variant="filled">Transaction deleted created.</MuiAlert>
+                    <MuiAlert onClose={ handleClose } severity="error" elevation={ 6 } variant="filled">Transaction deleted.</MuiAlert>
                 </Snackbar>
                 :
                 <Snackbar
